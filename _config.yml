@@ -21,6 +21,7 @@ instagram:
 linkedin:
 
 # avatar and Favicon
+#avatar: http://7u2ho6.com1.z0.glb.clouddn.com/site-avatar.png
 avatar: https://avatars0.githubusercontent.com/u/18366474?v=3&s=460
 favicon: http://ohwxyjv7u.bkt.clouddn.com/favicon.ico
 
@@ -29,9 +30,9 @@ disqus:
   shortname: suyan-zh
 
 # google analytics config
-#ga:
-  #id: UA-88776131-1
-  #url: raoul1996.github.io
+ga:
+  id: UA-54767140-1
+  url: raoul1996.github.io
 
 # Build settings
 permalink: /:year/:month/:day/:title.html
@@ -42,7 +43,7 @@ sass:
   style: compressed
 
 # Jekyll Plugin
- https://help.github.com/articles/adding-jekyll-plugins-to-a-github-pages-site/
+# https://help.github.com/articles/adding-jekyll-plugins-to-a-github-pages-site/
 gems:
   - jekyll-sitemap
   - jekyll-seo-tag
