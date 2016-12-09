@@ -5,7 +5,6 @@ category: css那些事儿
 keywords: css3 animate
 ---
 
-# css3--transition(过渡) #
 
 *8/13/2016 11:10:49 PM *
 

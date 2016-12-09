@@ -2,12 +2,8 @@
 layout: post
 title: tor网桥
 category: 科学上网
-keywords: Tor GFW 
+keywords: Tor GFW
 ---
-
-#torBridge
----
-###own：
 
 
 **obfs3**

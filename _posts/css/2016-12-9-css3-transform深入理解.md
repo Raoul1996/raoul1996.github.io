@@ -5,11 +5,6 @@ category: css那些事儿
 keywords: css3 animate 
 ---
 
-# css3 transform属性理解 #
-
-8/26/2016 5:24:06 PM 
-
-*editor：raoul*
 
 
 ### css3中的transform（变换）有4个属性方法： ###
