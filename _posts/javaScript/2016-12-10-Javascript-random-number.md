@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Javascript取得一个伪随机数
-category: JavaScript
+category: JavaScript其实很强大
 keywords: 算法 随机数 JavaScript
 ---
 
