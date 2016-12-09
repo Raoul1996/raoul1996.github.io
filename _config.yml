@@ -1,10 +1,10 @@
 # Site settings
 title: 宝宝周的博客
-email: raoul199606@gmail.com
+email: baobaozhou199606@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
   raoul1996的博客
 baseurl: "" # the subpath of your site, e.g. /blog/
-url: http://raoul1996.github,io # the base hostname & protocol for your site
+url: http://raoul1996.github.io # the base hostname & protocol for your site
 rss_url: /pages/feed.xml
 author: Raoul1996
 
