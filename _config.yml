@@ -29,9 +29,9 @@ disqus:
   shortname: suyan-zh
 
 # google analytics config
-ga:
-  id: UA-88776131-1
-  url: raoul1996.github.io
+#ga:
+  #id: UA-88776131-1
+  #url: raoul1996.github.io
 
 # Build settings
 permalink: /:year/:month/:day/:title.html
