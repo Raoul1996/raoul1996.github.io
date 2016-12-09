@@ -1,6 +1,6 @@
 ---
 layout: post
-title: css3-transform属性理解
+title: css3-transition学习笔记
 category: css那些事儿
 keywords: css3 animate
 ---
