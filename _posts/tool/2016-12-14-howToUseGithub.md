@@ -8,7 +8,7 @@ keywords: Github 注册 小白使用github
 
 *适用范围：初次接触github，本文会领导你初步探索一下github，因为github我也不是很熟练。。。。。*
 
-###先放一点前辈们的教程
+### 先放一点前辈们的教程
 
 1. [怎样使用 GitHub？文科妹子写的 Github 入门教程](https://gold.xitu.io/entry/56e638591ea49300550885cc "教程十分基础，妹子很风趣，很好玩的哦")
 
