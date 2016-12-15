@@ -2,29 +2,32 @@
 layout: post
 title: css3-transform属性理解
 category: css那些事儿
-keywords: css3 animate 
+keywords: css3 animate
+
 ---
 
 
 
 ### css3中的transform（变换）有4个属性方法： ###
 
->**rotate():旋转一定角度**
+**rotate():旋转一定角度**
 
 	-webkit-transform:rotate(deg);
 	-moz-transform:rotate(deg);
 	transform:rotate(deg);
->**skew():斜拉(扭曲)一定角度**
+	
+**skew():斜拉(扭曲)一定角度**
 
 	-webkit-transform:skew(x,y);
 	-moz-transform:skew(x,y);
 	transform:skew(x,y);
->**scale():缩放一定倍率**
+	
+**scale():缩放一定倍率**
 
 	-webkit-transform:scale(time);
 	-moz-transform:scale(time);
 	transform:scale(time);
->**translate():位移(偏移)一定距离(px,percent......)**
+**translate():位移(偏移)一定距离(px,percent......)**
 
 	-webkit-transform:translate(x,y);
 	-moz-transform:translate(x,y);
@@ -54,12 +57,14 @@ transform:matrix(a,b,c,d,e,f)代表了一个这样的样的三阶方阵
 示例:
 
 	transform:matrix(1,0,0,1,30,30)
+	
 假设这个矩阵的偏移元素中心点为(0,0),即x=0,y=0.
 
 按照上述公式,我们可以计算偏移后,中心点的横坐标和纵坐标的值:
 
 	X=ax+cy+e=1*0+0*0+30=30
 	Y=bx+dy+f=0*0+1*0+30=30
+	
 变换后,中心点的坐标变为(30,30)
 
 其他点的坐标变为(x+e,y+f)
@@ -68,30 +73,34 @@ transform:matrix(a,b,c,d,e,f)代表了一个这样的样的三阶方阵
 
 **translate()的实现在于改变matrix(1,0,0,1,e,f)的e和f值.**
 
->**scale()如何实现**
+**scale()如何实现**
 
 
 代码:
 
 	transform:matrix(1,0,0,1,30,30)
+
 请注意代码中有两个1,让我们改变一下,并取消偏移并计算出变换后点(x,y)的坐标:
 
 	transform:matrix(s,0,0,s,0,0)
+
 变换后坐标
 
 	X=ax+cy+e=s*x+0*y+0=sx
 	Y=bx+dy+f=0*x+s*y+0=sy
+
 注意到,经过以上变换,变换元素的点(x,y)->(sx,sy),反映到元素图形上,就是元素的长和宽都变为原来的s倍
 
 总结:
 
 **scale()的实现在于改变matrix(a,b,c,d,e,f)的a和d值**
 
->**rotate():旋转的如何实现**
+**rotate():旋转的如何实现**
 
 国际惯例,代码一段
 
 	transform:matrix(cosθ,sinθ,-sinθ,cosθ,0,0)
+
 变换后坐标
 
 	X=ax+cy+e=xcosθ-ysinθ
@@ -101,18 +110,21 @@ transform:matrix(a,b,c,d,e,f)代表了一个这样的样的三阶方阵
 
 一张图儿，搞定
 
->**skew():拉伸（斜拉）如何实现**
+**skew():拉伸（斜拉）如何实现**
 
 最后一次代码：
 
 	transform:matrix(1,tan(θy),tan(θx),1,0,0)
+
 对应
 
 	transform:skew(θx+"deg",θy+"deg)
+
 计算变换后坐标：
 
 	X=x+ytanθx
 	Y=y+xtanθy
+
 其中θx为x轴倾斜角度（变换后图形与y轴夹角),θy为y轴倾斜角度(变换后图形与x轴夹角)
 
 这里没图了，因为我把cad卸载了，原因是不会用。。
@@ -136,10 +148,12 @@ transform:matrix(a,b,c,d,e,f)代表了一个这样的样的三阶方阵
 	b=2k/(1+k*k)
 	c=2k/(1+k*k)
 	d=(k*k-1)/(1+k*k)
+
 记忆规则：
 
 	a+d=0
 	b=c
+
 证明思路：
 
 选择合适的坐标系，设置对称轴为y=kx，求点(x,y)关于y=kx的对称点,然后根据上面的公式:X=ax+cy+eY=bx+dy+f,找出变换矩阵的结构.
@@ -153,11 +167,13 @@ transform:matrix(a,b,c,d,e,f)代表了一个这样的样的三阶方阵
 线段的中点在中垂线上:
 
 	k(x+X)/2=(y+Y)/2    -------①
+
 因为线段的中点在中垂线上,所以中点符合y=kx,代入
 
 中垂线垂直于线段:
 
 	(Y-y,X-x)•(kx-0,x-0)=0  =>  k(Y-y)=X-x       ------②
+
 线段的方向向量和中垂线的方向向量垂直,所以点积为0,如果不明白向量的话,(Y-y)/(X-x)=-1/k也可以,上面的方法更具有普适性.
 
 **联立方程①和②,解出X和Y的值,根据上面的公式:X=ax+cy+e Y=bx+dy+f,即可解出上面的结果.**

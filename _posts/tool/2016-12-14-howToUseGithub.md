@@ -14,7 +14,7 @@ keywords: Github 注册 小白使用github
 
 2. [如何高效利用GitHub](http://www.yangzhiping.com/tech/github.html "上文中的妹纸同样也推荐了")
 
-3. [Git教程](http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000 "廖雪峰大牛的git教程哦,暂时可以先不看")
+3. ~~[Git教程](http://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000 "廖雪峰大牛的git教程哦,暂时可以先不看")~~
 
 ### Github可以做什么
 
@@ -123,7 +123,7 @@ ws同样要求你设置一个密码,记得别忘了..不然重置很费劲的...
 
 点一下clone,然后webstorm就会去对应的地址上去下载远程仓库.
 
-### 如何将代码推送到远程服务器
+### 如何将代码推送到远程分支
 
 ![](http://i.imgur.com/iAH22eX.png)
 
