@@ -14,15 +14,11 @@ keywords: JavaScript闭包
 
 	> 在Javascript中，如果你在另一个函数中使用了function关键字，那么你就创建了一个闭包。
 
-- 以前也断断续续的看了一些关于闭包的文章，其中老姚的文章给了我不少启示，在[我再来说说闭包，保证初学者能看懂](http://www.qdfuns.com/notes/17398/68357db148a3aea1b7ac9d7ae071fc2d.html)一文中，他认为：
+- 以前也断断续续的看了一些关于闭包的文章，其中老姚的文章给了我不少启示，在[最后一次说说闭包](http://www.qdfuns.com/notes/17398/9b28ba7e036240b1252f1c82b9883d94:storey-3)一文中，他认为：
 
-	> 那就是你这个b函数必须在a的作用域之外调用才行。
-	怎么能在a的作用域之外调用b呢，两个办法。
-	1. 把b做为a的返回值结构的一部分。
-	2. 把b绑定dom的事件上。
-
-
-	对于第一种，a能返回b，运行完a之后，保存a的返回结果，自然拿到b函数，然后再调用b，这样确实是在a的作用域之外调用b了。**具体的解释可以看看他的文章**
+	1. 调用的函数是父级作用域内部声明的
+	2. 调用的函数是在父级作用域之外进行调用
+	3. 调用的函数内部使用了父级作用域的内部变量
 
 - 阮一峰老师在[学习Javascript闭包（Closure）](http://www.ruanyifeng.com/blog/2009/08/learning_javascript_closures.html)一文中，则这么认为闭包：
 
@@ -113,11 +109,61 @@ keywords: JavaScript闭包
 
 那么，如果我们从**在变量被调用的时候，浏览器沿作用域链向上查找，如果查找到了，就立即使用**的角度去理解闭包，是一个什么情况呢？
 
-在上上个例子中，执行到sayHello2('Bob')的时候，text的内容从*"Bob"*变到了*"Hello Bob"*。**然后say2()执行的时候，sayHello2()函数返回了function() { console.log(text); }，然后浏览器沿作用域链向上查找text变量，同时上文有提到了，在上次执行后，浏览器不会销毁局部变量text，而是保留。所以浏览器可以查询到text变量的值为***"Hello Bob"*。**既然查到了text的值，那么就可以很愉快的使用console.log()方法了啊~~~~**
+在上上个例子中，执行到sayHello2('Bob')的时候，text的内容从*"Bob"*变到了*"Hello Bob"*。**然后say2()执行的时候，sayHello2()函数返回了function() { console.log(text); }，然后浏览器沿作用域链向上查找text变量，同时上文有提到了，在上次执行后，浏览器不会销毁局部变量text，而是保留。所以浏览器可以查询到text变量的值为***"Hello Bob"*。**既然查到了text的值，那么就可以很愉快的使用console.log()方法了啊~~~~
 
-下面还有几个小例子，由于明天大年初二需要去祭拜祖先，有空了咱们再聊聊~
+## 更多的实例
 
+	var gLogNumber, gIncreaseNumber, gSetNumber;
+	function setupSomeGlobals() {
+  	// 局部变量num最后会保存在闭包中
+  	var num = 42;
+  	// 将一些对于函数的引用存储为全局变量
+  	gLogNumber = function() { console.log(num); }
+  	gIncreaseNumber = function() { num++; }
+  	gSetNumber = function(x) { num = x; }
+	}
+	setupSomeGlobals();
+	gIncreaseNumber();
+	gLogNumber(); // 43
+	gSetNumber(5);
+	gLogNumber(); // 5
+	var oldLog = gLogNumber;
+	setupSomeGlobals();
+	gLogNumber(); // 42
+	oldLog() // 5
 
+这个是这个例子在chrome中的运行截图
+
+![](http://i.imgur.com/RI3GPEJ.png)
+
+分析一下这个例子。
+
+先定义一个全局函数`setupSomeGlobals()`,内部包含一个局部变量`num`,并初始为42,然后在这个全局函数中定义了3个方法`gLogNumber()`和`gIncreaseNumber()`以及`gSetNumber(x)`.在`setupSomeGlobals()`的作用域**外**调用上述的三个方法`gLogNumber()`和`gIncreaseNumber()`以及`gSetNumber(x)`.即可形成闭包.
+
+在外部调用一次`setupSomeGlobals()`方法后,调用`gIncreaseNumber()`,但是在他自己的作用域中,不能找到变量`num`,所以浏览器便会去它的父级作用域,也就是`setupSomeGlobals()`的作用域中查找变量`num`以及它的值.成功找到后,将`num`自增1.此时,`num`的值为**43**
+
+然后调用`gLogNumber()`方法,将43输出,使用`gSetNumber(x)`方法将`num`变为5.此时`num`的值为**5**
+
+**然后,定义一个oldLog变量,初始值为gLogNumber.**此时,`num`的值还为**5**.
+
+在上文已经提过,闭包只会发生在同一条作用域链上,再次运行`setupSomeGlobals()`方法后,所有变化和本轮就没有关系了,所以不用进行考虑.
+
+代码可以进行一下简化:
+	
+	var oldLog = gLogNumber;
+	oldLog() // 5
+
+如果构成闭包,那么局部变量`num`在函数返回以后不会被销毁,而是被保留.执行`oldLog()`方法的时候,将会打印出`num`的值.当自己的作用域中没有这个变量的话,便会去父级作用域进行查找.此时num的值为5,进行输出.
+
+当执行`console.log(num);`的时候，会返回undefined，num在外部是不可访问的一个变量。
+
+## 闭包的局限
+
+闭包的缺点就是常驻内存，会增大内存使用量，使用不当很容易造成内存泄露。
+
+## 最后的叨叨
+
+这篇文章也是我第一次去写关于js比较深入的东西的文章，如果有错误谢谢您的指正。
 
 
 
