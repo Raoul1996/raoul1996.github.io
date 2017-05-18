@@ -167,3 +167,6 @@ PS：由于windows的命令行实在是弱鸡，这里我用了Windows的Ubuntu�
 具体代码实现欢迎移步我的[github repo](https://github.com/Raoul1996/expressApi.git)
 
 **我能怎么办，我也很绝望啊**
+
+对了，记得安装cors模块，不知道干嘛使的，反正我安上了。。
+有病治病，无病强身~
