@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 从零到一，教你搭建支持跨域的网络请求接口
-category: node
+category: Node
 keywords: node, nodeJS express api
 ---
 
