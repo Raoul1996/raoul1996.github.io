@@ -58,7 +58,7 @@ keywords: ajax 网络请求
 
 ```
 $.ajax({
-    url:"localhost:3000/api/book",
+    url: "localhost:3000/api/book",
   });
 
 ```
@@ -69,10 +69,10 @@ enough. 这个就是最简单的请求了。
 
 ```
 $.ajax({
-    url : "localhost:3000/users/login",
-    type : "POST",
+    url: "localhost:3000/users/login",
+    type: "POST",
     dataType: "json",
-    data:{
+    data: {
       mobile: "12345678901",
       password: "123456"
     }
@@ -136,9 +136,9 @@ $.ajax({
 
 $.ajax({
     url : "localhost:3000/users/login",
-    type : "POST",
+    type: "POST",
     dataType: "json",
-    data:{
+    data: {
       mobile: "12345678901",
       password: "123456"
     }，
