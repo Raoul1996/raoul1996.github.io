@@ -14,6 +14,6 @@ keywords: 算法 随机数 JavaScript
 
 [http://www.hubwiz.com/class/54f3ba65e564e50cfccbad4b](http://www.hubwiz.com/class/54f3ba65e564e50cfccbad4b "汇智网angularJS进阶课程")
 
-	var repo=[1,2,4,56,7,8,9,56,3,5,6,7,3,3,5];
-	var idx =Math.floor(Math.random()*repo.length);
+	var repo = [1,2,4,56,7,8,9,56,3,5,6,7,3,3,5];
+	var idx = Math.floor(Math.random() * repo.length);
 	console.log(repo[idx]);//该用法可以随机选出数组repo中的任何一个元素
