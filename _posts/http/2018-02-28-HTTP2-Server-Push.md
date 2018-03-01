@@ -2,7 +2,7 @@
 layout: post
 title: Nginx HTTP/2 Server Push
 category: Http
-keyword Http2 protocols Server Push
+keyword: Http2 protocols Server Push
 ---
 
 Nginx HTTP/2 Server Push
