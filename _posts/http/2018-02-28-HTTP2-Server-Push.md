@@ -9,7 +9,7 @@ Nginx HTTP/2 Server Push
 
 ### 前言
 
-最近在把之前使用 koa2 框架写的 vote 后端使用阿里开源的 eggjs 重写了一遍，并沉淀出了几个小模块发布到了 npm 上，连续谢了好多天的 node 代码，都快些吐了。
+最近在把之前使用 koa2 框架写的 vote 后端使用阿里开源的 eggjs 重写了一遍，并沉淀出了几个小模块发布到了 npm 上，连续写了好多天的 node 代码，都快些吐了。
 前几天从掘金上看到阮一峰老师在使用 Docker 容器研究 [`HTTP/2 server push`](http://www.ruanyifeng.com/blog/2018/02/nginx-docker.html)，但是还没有真正涉及到 `server push` 的具体操作。于是照着教程做了一下，这里进行一些简单的记录，并进行一番实践。
 
 ### 操作环境
