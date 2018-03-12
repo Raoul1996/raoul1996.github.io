@@ -11,6 +11,8 @@ keyword: Vue2 生命钩子
 
 问了一些关于 JavaScript 中异步的解决办法、Vue 中的生命周期等等话题。尤其是 Vue 生命周期这一块答得简直是一塌糊涂。
 
+文章可能排版有问题，同时可以[查看这里](https://github.com/Raoul1996/raoul1996.github.io/issues/4)
+
 ### 一图胜千言
 
 ![Vue 生命周期图示](http://oq5td7hx8.bkt.clouddn.com/lifecycle.png)
@@ -26,27 +28,92 @@ keyword: Vue2 生命钩子
 ### 生命周期钩子一共有哪些
 
 之前在 [segmentfault](https://segmentfault.com/)上看到了[某网友的文章](https://segmentfault.com/a/1190000008010666)，文中的表格挺赞的。
+![life-cycle-table](http://oq5td7hx8.bkt.clouddn.com/life-cycle-table.png)
 
-  Vue 1.0+   |    Vue 2.0+   |                       Description
--------------|---------------|-------------------------------------------------------------
-init         | beforeCreate  | 组件实例刚刚被创建，组件属性计算之前，例如 data 属性
-created      | created       | 组件实例创建完成，属性已经绑定，但是 DOM 还没有生成，`$el` 属性还不存在
-beforeCompile| beforeMount   | 模板编译/挂载之前
-complied     | mounted       | 模板编译/挂载之后
-ready        | mounted       | 模板编译/挂载之后（不保证组件已经在 document 中）
--            | beforeUpdate  | 组件更新前
--            | updated       | 组件更新后
--            | actived       | for `keep-alive`，组件被激活时调用
--            | deactived     | for `keep-alive`，组件被移除时调用
-attached     | -             | 已经不用了
-detached     | -             | 已经不用了
-beforeDestory| beforeDestory | 组件销毁前
-destoryed    | destoryed     | 组件销毁后
--            | errorCaptured | Vue@2.5.0+ 新增，子孙组件发生错误时调用
 ### 生命周期执行顺序验证
 
+
 在 [这篇文章](https://segmentfault.com/a/1190000008010666)中已经有了代码，我先将其放到 [gist](https://gist.github.com/Raoul1996/a2adce57c4636bd4155fec12f74aed90)。
-<script src="https://gist.github.com/Raoul1996/a2adce57c4636bd4155fec12f74aed90.js"></script>
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/vue/2.1.3/vue.js"></script>
+</head>
+<body>
+
+<div id="app">
+     <p>{{ message }}</p>
+</div>
+
+<script type="text/javascript">
+    
+  var app = new Vue({
+      el: '#app',
+      data: {
+          message : "xuxiao is boy" 
+      },
+       beforeCreate: function () {
+                console.group('beforeCreate 创建前状态===============》');
+               console.log("%c%s", "color:red" , "el     : " + this.$el); //undefined
+               console.log("%c%s", "color:red","data   : " + this.$data); //undefined 
+               console.log("%c%s", "color:red","message: " + this.message)  
+        },
+        created: function () {
+            console.group('created 创建完毕状态===============》');
+            console.log("%c%s", "color:red","el     : " + this.$el); //undefined
+               console.log("%c%s", "color:red","data   : " + this.$data); //已被初始化 
+               console.log("%c%s", "color:red","message: " + this.message); //已被初始化
+        },
+        beforeMount: function () {
+            console.group('beforeMount 挂载前状态===============》');
+            console.log("%c%s", "color:red","el     : " + (this.$el)); //已被初始化
+            console.log(this.$el);
+               console.log("%c%s", "color:red","data   : " + this.$data); //已被初始化  
+               console.log("%c%s", "color:red","message: " + this.message); //已被初始化  
+        },
+        mounted: function () {
+            console.group('mounted 挂载结束状态===============》');
+            console.log("%c%s", "color:red","el     : " + this.$el); //已被初始化
+            console.log(this.$el);    
+               console.log("%c%s", "color:red","data   : " + this.$data); //已被初始化
+               console.log("%c%s", "color:red","message: " + this.message); //已被初始化 
+        },
+        beforeUpdate: function () {
+            console.group('beforeUpdate 更新前状态===============》');
+            console.log("%c%s", "color:red","el     : " + this.$el);
+            console.log(this.$el);   
+               console.log("%c%s", "color:red","data   : " + this.$data); 
+               console.log("%c%s", "color:red","message: " + this.message); 
+        },
+        updated: function () {
+            console.group('updated 更新完成状态===============》');
+            console.log("%c%s", "color:red","el     : " + this.$el);
+            console.log(this.$el); 
+               console.log("%c%s", "color:red","data   : " + this.$data); 
+               console.log("%c%s", "color:red","message: " + this.message); 
+        },
+        beforeDestroy: function () {
+            console.group('beforeDestroy 销毁前状态===============》');
+            console.log("%c%s", "color:red","el     : " + this.$el);
+            console.log(this.$el);    
+               console.log("%c%s", "color:red","data   : " + this.$data); 
+               console.log("%c%s", "color:red","message: " + this.message); 
+        },
+        destroyed: function () {
+            console.group('destroyed 销毁完成状态===============》');
+            console.log("%c%s", "color:red","el     : " + this.$el);
+            console.log(this.$el);  
+               console.log("%c%s", "color:red","data   : " + this.$data); 
+               console.log("%c%s", "color:red","message: " + this.message)
+        }
+    })
+</script>
+</body>
+</html>
+```
 
 打开[jsbin](https://jsbin.com/feqitos/1/edit?html,output)，然后打开 chrome 开发者工具即可看到运行结果。
 
