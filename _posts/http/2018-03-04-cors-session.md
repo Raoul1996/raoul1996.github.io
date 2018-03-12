@@ -8,8 +8,8 @@ keyword: Http session captcha
 早就听说 Session 是一个大坑，最近在使用 Node 做图片验证码的时候，刚好掉到了里边，所以记录一下。
 ### 操作环境
 
-- Eggjs@\^2.3.0
-- Vue@\^2.5.11
+- Eggjs 2.3.0+
+- Vue 2.5.11+
 - [线上投票地址](https://votes.raoul1996.cn)
 - [线上后台地址](https://api.raoul1996.cn)
 - [后端仓库地址](https://github.com/Raoul1996/egg-vote)
@@ -17,7 +17,7 @@ keyword: Http session captcha
 
 ### Session 是什么
 
-这个问题的确是老生常谈。由于 HTTP 协议是无状态的协议，所以服务端在记录某种状态的时候，就需要使用某种机制来识别用户，这种机制就是 Session。
+这个问题的确是老生常谈。由于 HTTP 协议是无状态的协议，所以服务端在记录某种状态的时候，就需要使用某种机制来识别用户，这里就可以使用 Session。
 
 #### 常见的应用场景
 
@@ -26,17 +26,16 @@ keyword: Http session captcha
 - 追踪用户
 - 等等
 
-### 图片验证码如何存储到 Session
-
-egg 中支持将 Session 存储到 Redis 数数据库中，但是由于目前只是使用 session 存储一下 captcha 的值，没必要使用 redis 进行操作了，直接放到传统的内存中就 OK 了。
 
 ### 服务端如何识别 session
 
 这时候就不得不提一下 Cookie。同样也是一个老生常谈的问题。首先想一下我们是服务器的话，我们如何来识别客户端（Client）？
 
-由于 HTTP 是无状态的协议，所以我们期待客户机每次访问的时候，都告诉一下我们是谁，对吧？
+由于 HTTP 是无状态的协议，所以服务端需要客户机每次访问的时候，客户端需要告诉服务端自己到底是谁。
 
-事实上也是这样，在第一次创建 Session 的时候，服务端就会通过某种方式来告诉客户端，需要有某种方式来记录一下 Session ID。以后每次访问的时候，都把这个 ID 发给服务端用于用户身份的识别。
+在第一次创建 Session 的时候，服务端就会通过某种方式来告诉客户端，需要有某种方式来记录一下 Session ID。以后每次访问的时候，都把这个 Id 发给服务端用于用户身份的识别。
+
+现在的问题就是，**如何把 Session Id 传回服务端。**
 
 Cookie 就非常适合用来处理这个工作。浏览器在访问相应域名（domain）的时候，默认会自动携带对应域名下的 Cookie，无需我们做额外处理。
 
@@ -53,6 +52,8 @@ Session 默认存储在服务器的内存中，然后将 Session Id 写入客户
 #### Session 持久化存储
 
 Session 可以存储到文件中，和各种数据库中。Node 项目的话一般选择会存储到 redis 数据库中。但是同样由于暂时没有持久化存储的需求这里先不讨论。
+
+egg 支持将 Session 存储到 Redis 数数据库中，但是由于目前只是使用 session 存储一下 captcha 的值，没必要使用 redis 进行操作了，直接放到传统的内存中就 OK 了。
 
 ### 跨域携带 Cookie 前后端代码实现
 
@@ -102,7 +103,7 @@ module.exports = app => {
 }
 ```
 
-```
+```js
 // config.prod.js
 module.exports = app => {
 	const domainWhiteList = []
