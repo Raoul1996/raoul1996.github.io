@@ -3,137 +3,53 @@ title: I Want to Say.....
 layout: post
 ---
 
-## 退后
+## Time
 
-天空灰的像哭过
+Money is not evil by itself 
 
-离开你以后
+Its just paper with perceived value to obtain other things we value in other ways 
 
-并没有更自由
+If not money – what is evil you may ask? 
 
- 
+Evil is the unquenchable, obsessive and moral bending desire for more 
 
-酸酸的空气
+Evil is the bottomless, soulless and obsessive-compulsive pursuit of some pot of gold 
 
-嗅出我们的距离
+at the end of some rainbow which doesn’t exist 
 
-一幕锥心的结局
+Evil is having a price tag for your heart and soul in exchange for financial success at any cost 
 
-像呼吸般无法停息
+Evil is trying to buy happiness, again and again 
 
- 
+until all of those fake, short lived mirages of emotions are gone 
 
-抽屉泛黄的日记
+Make more time 
 
-榨干了回忆
+I’m not saying you can’t be financially successful 
 
-那笑容是夏季
+I’m saying have a greater purpose in life well beyond the pursuit of financial success 
 
- 
+Your soul is screaming for you to answer your true calling 
 
-你我的过去
+You can change today if you redefine what success is to you 
 
-被顺时针的忘记
+You can transform your damaged relationships and build new ones 
 
-缺氧过后的爱情
+You can forgive yourself and others who’ve hurt you 
 
-粗心的眼泪是多余
+You can become a leader by mentoring with others who you aspire to be like 
 
- 
+You can re-balance your priorities in life 
 
-我知道你我都没有错
+You can heal your marriage and recreate a stronger love than you ever thought possible 
 
-只是忘了怎么退后
+You can become the best parent possible at any age – even 86 
 
-信誓旦旦给了承诺
+but don’t wait until then… 
 
-全被时间扑了空
+You will always be able to make more money 
 
- 
-
-我知道我们都没有错
-
-只是放手会比较好过
-
- 
-
-最美的爱情回忆里待续
-
- 
-
-天空灰的像哭过
-
-离开你以后
-
-并没有更自由
-
- 
-
-酸酸的空气
-
-嗅出我们的距离
-
-一幕锥心的结局
-
-像呼吸般无法停息
-
- 
-
-抽屉泛黄的日记
-
-榨干了回忆
-
-那笑容是夏季
-
- 
-
-你我的过去
-
-被顺时针的忘记
-
-缺氧过后的爱情
-
-粗心的眼泪是多余
-
- 
-
-我知道你我都没有错
-
-只是忘了怎么退后
-
-信誓旦旦给了承诺
-
-全被时间扑了空
-
- 
-
-我知道我们都没有错
-
-只是放手会比较好过
-
-最美的爱情回忆里待续
-
- 
-
-我知道你我都没有错
-
-只是忘了怎么退后
-
-信誓旦旦给了承诺
-
-全被时间扑了空
-
- 
-
-我知道我们都没有错
-
-只是放手会比较好过
-
- 
-
-最美的爱情回忆里待续
-
-**有些歌曲，在某一时刻，就听懂了呢**
+But you cannot make more time 
 
 ## 博客平台
 
