@@ -27,7 +27,7 @@ keywords: Python Django PyCharm ORM
 ### 原生 SQL 语句操作数据库
 
 ```py
-{BASE_DIR}/apps/message/models.py
+# {BASE_DIR}/apps/message/models.py
 import MySQLdb
 def book_list(request):
     db = MySQLdb.connect(user="me", db="mydb", password="secret", host="localhost")
@@ -42,7 +42,7 @@ def book_list(request):
 具体的一些细节知识下面会进行叙述。这里只是展示一下如何使用。
 
 ```py
-{BASE_DIR}/apps/message/models.py
+# {BASE_DIR}/apps/message/models.py
 
 # 从 Django 中引入 models
 from django.db import models
