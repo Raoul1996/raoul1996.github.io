@@ -323,51 +323,7 @@ UserMessage.objects.filter(name='test')
 
 ### 渲染到模板
 
-在上面步骤中，我们将符合预设条件的数据从数据库中取出来，传递到模板中，这里的目标是将数据正确的显示与渲染。部分语法类似于 `ejs` 模板的语法，但同时 Django 又在模板中内置了很多常用的函数。但是 Django 不像 Java 那样，允许在模板中写一些 Java 代码，Django 的 `Template` 中不允许将 `Python` 代码混进来。
-
-由于模板代码过长，这里只放一些关键部分的代码，完整的代码可以查看文章对应的代码仓库。
-
-```html
-<form action="{% url 'go_form' %}" method="post" class="smart-green">
-    <label>
-        <span>姓名 :</span>
-        <input id="name" type="text" name="name" value="{% if my_message.name == 'test' %}test{% endif %}" class="error"
-               placeholder="请输入您的姓名"/>
-    </label>
-    <label>
-        <span>留言 :</span>
-        <textarea id="message" name="message" placeholder="请输入你的建议">{{ my_message.message }}</textarea>
-    </label>
-    {% csrf_token %}
-</form>
-
-```
-
-在上一篇文章中，提到过，`path` 接收 `name` 参数。在 `template` 中可以通过 `name` 来取到对应的 `url`，方法如下：
-
-```html
-action="{% url 'go_form' %}"
-```
-
-这样做提供了另一种获取 `url` 的方式，当我们因为某种原因去修改了 `url` 地址之后，通过 `name` 还能找到它。
-
-在 `textarea` 中，有这样一段代码：
-
-```html
-{{ my_message.message }}
-```
-作用是取到传入的 `my_message` 对象的 `message` 属性取出来并显示，由于 html 基本属于前端部分了，所以用前端的方式进行描述。
-
-双花括号（八字胡）语法： `{{...}}` 在任何模板语言中都很常见，作用是将数据渲染到双括号内部。
-
-上面还有一部分代码是这样子的：
-
-```html
-{% if my_message.name == 'test' %}test{% endif %}"
-```
-意思很好懂的，是吧。
-
-具体的 Django 中模板的语法可以查看官方文档。
+这部分由于 jekyll 编译死活过不去，所以放到了 [Issue](https://github.com/Raoul1996/raoul1996.github.io/issues/6) 中。
 
 ## 后记
 
