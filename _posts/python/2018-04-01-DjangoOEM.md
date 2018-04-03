@@ -1,13 +1,15 @@
 ---
 layout: post
-title: Django ORM 和 QuerySets (二)
+title: Django Model View Template 之间的简单交互 (二)
 category: Django
-keywords: Python Django PyCharm ORM
+keywords: Python Django PyCharm ORM MVT
 ---
 
 ## 前言
 
-接续前文，上一篇文章主要涉及了 Django 项目的基础配置等，这篇主要涉及数据库相关的 ORM ，也就是 Django 中的 Model 的使用。
+接续前文，上一篇文章主要涉及了 Django 项目的基础配置等，这篇主要涉及数据库相关的 ORM ，也就是 Django 中的 Model 的使用，MVT 三层之间的交互
+
+教程基本都是东拼西凑的，防止有些东西表述不准确，因为我之前写 JavaScript 比较多。但是里边注入了自己的理解，尽量讲清楚。
 
 ## 基础环境
 
@@ -15,12 +17,8 @@ keywords: Python Django PyCharm ORM
 2. Django 2.0.3
 3. Python 3.6.4
 4. [mxonline](https://github.com/Raoul1996/mxonline.git) start 分支
-5. [Python升级3.6 强力Django+杀手级Xadmin打造在线教育平台](https://coding.imooc.com/class/78.html)
-6. [MDN 的 Django教程 ———— 设计LocalLibrary模型](https://developer.mozilla.org/zh-CN/docs/Learn/Server-side/Django/Models)
-7. [Django 官方文档 Model 部分](https://docs.djangoproject.com/en/2.0/ref/models/)
 
-
-## ORM 简单使用
+## Django Model 配置
 
 代替使用原生的 SQL 语句操作数据库。
 
@@ -37,9 +35,9 @@ def book_list(request):
     db.close()
 ```
 
-### 使用 Django Model
+### 配置 Django Model
 
-具体的一些细节知识下面会进行叙述。这里只是展示一下如何使用。
+具体的一些细节知识下面会进行叙述。这里只是展示一下如何配置。
 
 ```py
 # {BASE_DIR}/apps/message/models.py
@@ -174,14 +172,212 @@ name = models.CharField(max_length=20, verbose_name=u"用户名")
 
 #### 元数据
 
+通过声明 `class Meta` 来声明模型级别的元数据
+
+```py
+class UserMessage(models.Model):
+	# Config Field
+		
+    class Meta:
+    	ordering = ["id"]
+       verbose_name = u"用户留言信息"
+       verbose_name_plural = verbose_name
+
+```
+
+这里最有用的功能是可以指定模型返回数据时候的默认的顺序，更多的文档可以查看[这里](https://docs.djangoproject.com/zh-hans/2.0/ref/models/options/)
+
 #### 方法
 
+一个模型也可以有方法，最基本的使用就是定义一个标准的 Python 类方法： `__str__`：
+
+```py
+class UserMessage(models.Model):
+	# Config Field
+	
+	# Config Meta
+	
+    def __str__(self):
+       return self.message    
+```
+
+这样为每个对象返回一个人类可读的字符串。当然还有其他高级的使用，日后再说
 #### 完整的 model
 
-## 模型管理
+```py
+# {BASE_DIR/apps/message/models.py}
 
-### 创建和修改记录
+from django.db import models
+
+
+# Create your models here.
+class UserMessage(models.Model):
+    name = models.CharField(max_length=20, verbose_name=u"用户名")
+    email = models.EmailField(verbose_name=u"邮箱")
+    address = models.CharField(max_length=100, verbose_name=u"联系地址")
+    message = models.CharField(max_length=500, verbose_name=u"留言信息")
+
+    class Meta:
+        ordering = ["id"]
+        verbose_name = u"用户留言信息"
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.message
+
+```
+
+## 使用 Django ORM
+
+之前已经定义好了数据模型的字段（Field）、元数据（Meta）、方法（Method）等。现在要做的是把页面上提交过来的数据通过 ORM 来存放到数据库中，通过 ORM 来进行数据的 CURD 操作。
+
+### 创建数据
+
+在 `templates` 中已经创建了 `message_form.html` 模板文件，现在进行修改，修改 `form` 的 `action` 目标地址：
+
+```html
+<form action="/" method="post" class="smart-green">
+```
+
+这里根据自己配置的 `Url` 来自行决定，由于笔者配置的是 `/`，所以这里就配置成这个样子。
+
+这里指定的是使用 `form` 的原生事件 `post` 事件进行提交，但是在实际的开发中，为了实现更精确的控制，我们常常不会使用原生事件，而更倾向于使用 `ajax` 进行提交，当然这里的重点不是前端的逻辑，重点在于 Django 后端逻辑的处理，顾不赘述。
+
+接下来的任务就是：**拿到 POST 发来的数据，然后存入数据库中。**
+
+### 存储数据
+
+之前使用 Django 的 ORM 进行了数据库中数据表的配置，现在使用 Django 的 ORM 将数据保存到数据库中。
+
+在 Django 中，我们使用不是传统的 `MVC` 架构，我们使用的是一种叫 `MVT` 的方式。不同的 `Template（模板）` 呈现不同的 `View`。我们将在 `View（请求视层）`中获取用户提交的数据，以及将从 `Model（数据层）` 中获得的数据传递给 `Template(模板层)`。
+
+MVT 的概念本身就来自于 Django 框架，下面进行代码的展示：
+
+```py
+# {BASE_DIR/apps/message/views.py}
+from django.shortcuts import render  # 引入 render 方法
+from .models import UserMessage      # 引入之前配置好的 Model
+
+
+# Create your views here.
+
+def get_form(request):
+    if request.method == 'POST':
+        name = request.POST.get('name', '')
+        message = request.POST.get('name', '')
+        address = request.POST.get('address', '')
+        email = request.POST.get('email', '')
+        user_message = UserMessage()
+        user_message.name = name
+        user_message.message = message
+        user_message.address = address
+        user_message.email = email
+        user_message.save()
+    return render(request, 'message_form.html')
+
+```
+
+通过 `POST` 方法提交的数据会存储到 `request` 对象的 `POST` 属性下边，通过 `Django` 提供的 `get` 方法就可以取到对应的字段。其中 `get` 接收两个参数，分别是**字段的名称**和**默认值**。
+
+在取到 `Template` 提交过来的每一个字段之后，就可以使用 ORM 提供的方法将其存入数据库中。
+
+实例化引入的 Model，然后将之前定义的字段进行赋值，然后就可以调用实例的 `save()` 方法将数据存入数据库。
+
+然后就可以通过 `Navicat` 或者终端等方式查看数据是否保存到了数据库中。
+
+### 读取数据
+
+之前已经实现了数据的存储，这部分将实现数据的读取功能。
+
+```py
+# {BASE_DIR/apps/message/views.py}
+from django.shortcuts import render
+from .models import UserMessage
+
+
+# Create your views here.
+
+def get_form(request):
+    message = None
+    all_message = UserMessage.objects.filter(name='test')
+    if all_message:
+        message = all_message[0]
+    return render(request, 'message_form.html', {'my_message': message})
+```
+这里会涉及到 Django 的 `QuerySets（查询集）`相关知识，这里捡着用的着的部分看一下。
+
+首先先声明 `message`，值为 `None`，用于存储取到的数据。
+
+从本质上讲，`QuerySets` 是给定对象模型（这里是 `UserModel`）的对象列表（list），允许我们从数据库中读取数据，选择以及排序。通过这种方式操作的话，就可以避免直接操作数据库。从而抹平不同数据库操作的差异，这部分由 Django 帮我们来完成。
+
+上面的代码中有这样的一句：
+
+```py
+UserMessage.objects.filter(name='test')
+```
+作用是从数据库中查找 `name` 值为 `test` 的所有条目，返回的是一个 `<QuerySet>` 列表，并赋值给 `all_message`。同时我们也可以发现，`QuerySet` 可以链式调用。类似于 `JavaScript` 中的 `Promise`。
+
+然后如果 `all_message` 不为空的话，取出列表第一项，然后传递给 `my_message` 模板。
+
+关于 `QuerySet` 的详细知识，可以查看 Django 的官方文档的[这一部分](https://docs.djangoproject.com/zh-hans/2.0/ref/models/querysets/)
+
+### 渲染到模板
+
+在上面步骤中，我们将符合预设条件的数据从数据库中取出来，传递到模板中，这里的目标是将数据正确的显示与渲染。部分语法类似于 `ejs` 模板的语法，但同时 Django 又在模板中内置了很多常用的函数。但是 Django 不像 Java 那样，允许在模板中写一些 Java 代码，Django 的 `Template` 中不允许将 `Python` 代码混进来。
+
+由于模板代码过长，这里只放一些关键部分的代码，完整的代码可以查看文章对应的代码仓库。
+
+```html
+<form action="{% url 'go_form' %}" method="post" class="smart-green">
+    <label>
+        <span>姓名 :</span>
+        <input id="name" type="text" name="name" value="{% if my_message.name == 'test' %}test{% endif %}" class="error"
+               placeholder="请输入您的姓名"/>
+    </label>
+    <label>
+        <span>留言 :</span>
+        <textarea id="message" name="message" placeholder="请输入你的建议">{{ my_message.message }}</textarea>
+    </label>
+    {% csrf_token %}
+</form>
+
+```
+
+在上一篇文章中，提到过，`path` 接收 `name` 参数。在 `template` 中可以通过 `name` 来取到对应的 `url`，方法如下：
+
+```html
+action="{% url 'go_form' %}"
+```
+
+这样做提供了另一种获取 `url` 的方式，当我们因为某种原因去修改了 `url` 地址之后，通过 `name` 还能找到它。
+
+在 `textarea` 中，有这样一段代码：
+
+```html
+{{ my_message.message }}
+```
+作用是取到传入的 `my_message` 对象的 `message` 属性取出来并显示，由于 html 基本属于前端部分了，所以用前端的方式进行描述。
+
+双花括号（八字胡）语法： `{{...}}` 在任何模板语言中都很常见，作用是将数据渲染到双括号内部。
+
+上面还有一部分代码是这样子的：
+
+```html
+{% if my_message.name == 'test' %}test{% endif %}"
+```
+意思很好懂的，是吧。
+
+具体的 Django 中模板的语法可以查看官方文档。
 
 ## 后记
+
+这里只是简单的介绍了一下 Django 中 Model 层、View 层、以及 Template 层之间交互的部分知识，很简略，不详细。在每部分的后边都附加了详细的官方文档地址。如果以后有时间了可以对每部分进行详细的阐述。
+
+## 参考资料
+
+1. [Python升级3.6 强力Django+杀手级Xadmin打造在线教育平台](https://coding.imooc.com/class/78.html)
+2. [MDN 的 Django教程 ———— 设计LocalLibrary模型](https://developer.mozilla.org/zh-CN/docs/Learn/Server-side/Django/Models)
+3. [Django 官方文档 Model 部分](https://docs.djangoproject.com/en/2.0/ref/models/)
+4. [Django Girls 教程](https://tutorial.djangogirls.org/zh/django_orm/)
 
 

@@ -15,7 +15,7 @@ keywords: Python Django PyCharm
 	- database 配置
 	- 生成 Django 默认表，没有配置 model
 	- view 和 template 配置
-	- url 配置
+	- url 配置（包括配置 name）
 	- 静态文件路径配置
 
 ## 基础环境
@@ -288,18 +288,18 @@ $ cd apps/message
 $ touch urls.py
 ```
 
-编辑 `urls.py`:
-
 ```py
 # {BASE_URL}/apps/message/urls.py
 from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.getForm)
+    path('', views.getForm, name="go_form")
 ]
 
 ```
+
+在这里可以指定一个 `name` 参数，这个参数在后边会非常有用，因为在 `template` 中可以通过 `name` 来指定 `url`。
 #### 解决模块引用问题
 
 在配置完成 url 之后，运行 `runserver` 之后（或者在命令行中运行 `python manage.py runserver`），会报错：
