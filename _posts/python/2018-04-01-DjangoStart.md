@@ -117,7 +117,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'message'
+    'apps.message'
 ]
 
 ```
@@ -173,8 +173,6 @@ Windows 上需要自行下载 mysql-python 驱动，好像也挺多坑的，按�
 ```shell
 $ makemigrations
 ```
-在 `django@2.0.3` 中需要再运行下面的命令：
-
 ```shell
 $ migrate
 ```
