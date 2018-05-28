@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Nginx HTTP/2 Server Push
-category: Http
+category: Docker
 keyword: Http2 protocols Server Push
 ---
 
@@ -168,7 +168,7 @@ server {
 # 在 nginx@1.9.5 之后 nginx 支持 http2
 listen 443 ssl http2;
 
-# 这里填写证书文件的路径即可，我这里比较喜欢写绝对路径 
+# 这里填写证书文件的路径即可，我这里比较喜欢写绝对路径
 ssl_certificate           ssl/certificate.crt;
 ssl_certificate_key       ssl/key.key
 
