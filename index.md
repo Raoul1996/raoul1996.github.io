@@ -1,55 +1,29 @@
 ---
-title: I Want to Say.....
+title: 首页
 layout: post
 ---
 
-## Time
+## something
 
-Money is not evil by itself 
+好色风流
 
-Its just paper with perceived value to obtain other things we value in other ways 
+不是冤家不聚头
 
-If not money – what is evil you may ask? 
+只为淫人妇
 
-Evil is the unquenchable, obsessive and moral bending desire for more 
+难保妻儿否
 
-Evil is the bottomless, soulless and obsessive-compulsive pursuit of some pot of gold 
+嬉笑眼前谋
 
-at the end of some rainbow which doesn’t exist 
+孽满身后
 
-Evil is having a price tag for your heart and soul in exchange for financial success at any cost 
+报应从头
 
-Evil is trying to buy happiness, again and again 
+万恶淫为首
 
-until all of those fake, short lived mirages of emotions are gone 
+因此上美色邪淫一笔勾。
 
-Make more time 
 
-I’m not saying you can’t be financially successful 
-
-I’m saying have a greater purpose in life well beyond the pursuit of financial success 
-
-Your soul is screaming for you to answer your true calling 
-
-You can change today if you redefine what success is to you 
-
-You can transform your damaged relationships and build new ones 
-
-You can forgive yourself and others who’ve hurt you 
-
-You can become a leader by mentoring with others who you aspire to be like 
-
-You can re-balance your priorities in life 
-
-You can heal your marriage and recreate a stronger love than you ever thought possible 
-
-You can become the best parent possible at any age – even 86 
-
-but don’t wait until then… 
-
-You will always be able to make more money 
-
-But you cannot make more time 
 
 ## 博客平台
 
