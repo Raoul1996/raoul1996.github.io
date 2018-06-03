@@ -6,7 +6,7 @@ keyword: RegExp filter
 ---
 
 ### TL;DR
-
+[gist](https://gist.github.com/Raoul1996/3ad5466414276315c6359c39df8ec447)
 <script src="https://gist.github.com/Raoul1996/3ad5466414276315c6359c39df8ec447.js"></script>
 
 ### 核心
