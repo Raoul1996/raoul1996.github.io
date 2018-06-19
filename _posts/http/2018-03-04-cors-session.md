@@ -33,11 +33,13 @@ keyword: Http session captcha
 
 由于 HTTP 是无状态的协议，所以服务端需要客户机每次访问的时候，客户端需要告诉服务端自己到底是谁。
 
-在第一次创建 Session 的时候，服务端就会通过某种方式来告诉客户端，需要有某种方式来记录一下 Session ID。以后每次访问的时候，都把这个 Id 发给服务端用于用户身份的识别。
+一般服务端在用户第一次访问的时候，都会创建一个会话，称为 Session。每一个 Session 都会有一个唯一的 Session Id 用来标识会话。
+
+在创建 Session 后，服务端就会通过某种方式来告诉客户端，需要有某种方式来记录一下 Session Id。以后每次访问的时候，都需要用某种方式将 Session Id 回传到服务端用于客户端身份的识别。
 
 现在的问题就是，**如何把 Session Id 传回服务端。**
 
-Cookie 就非常适合用来处理这个工作。浏览器在访问相应域名（domain）的时候，默认会自动携带对应域名下的 Cookie，无需我们做额外处理。
+Cookie 就非常适合用来处理这个工作。浏览器在访问相应域名（domain）的时候，默认会自动携带对应域名以及其父域下的 Cookie，无需我们做额外处理。
 
 所以我们就可以把 Session Id 写到 cookie 中，然后再每次发请求的时候，交给服务端验证 Session Id，识别用户的登陆状态。
 
@@ -79,7 +81,7 @@ instance.defaults.withCredentials = true
 
 **跨域请求如何携带 Cookie？**
 
-[`XMLHttpRequest.withCredentials`](https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest/withCredentials) 属性是一个 `Boolean` 类型，默认值为 false。它指示了是否该使用类似cookies,authorization headers(头部授权)或者TLS客户端证书这一类资格证书来创建一个跨站点访问控制（cross-site Access-Control）请求。**在同一个站点下使用withCredentials 属性是无效的。**
+[`XMLHttpRequest.withCredentials`](https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest/withCredentials) 属性值为 `Boolean` 类型，默认值为 false。它指示了是否该使用类似cookies, authorization headers（头部授权）或者 TLS 客户端证书这一类资格证书来创建一个跨站点访问控制（cross-site Access-Control）请求。**在同一个站点下使用 withCredentials 属性是无效的。**
 
 **此外，这个指示也会被用做响应中cookies 被忽视的标示。默认值是false。**
 
