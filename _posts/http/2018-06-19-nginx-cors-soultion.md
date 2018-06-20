@@ -79,7 +79,7 @@ $request_uri   |  /captcha?timestemp="xxx"
 
 通过这些全局变量，或者称为内置预定义变量，就可以拿到请求的 URL，对于使用 CORS 的方法，只需要使用内置的 add-header 方法在响应中添加响应的 CORS 头即可。
 
-# [Nginx 添加 CORS 头](https://github.com/jaywcjlove/nginx-tutorial#%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98)
+#### [Nginx 添加 CORS 头](https://github.com/jaywcjlove/nginx-tutorial#%E8%B7%A8%E5%9F%9F%E9%97%AE%E9%A2%98)
 
 ```lua
 server {

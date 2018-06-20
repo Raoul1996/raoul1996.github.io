@@ -1,8 +1,10 @@
 ---
-layout: none
+layout: post
 title: encodeURI 和 encodeURIComponent 有何异同
 category: Http
-keyowrd: http encodeURI encodeURIComponent
+keyowrds: http encodeURI encodeURIComponent
 ---
 
 ### 背景
+
+参见 MDN
