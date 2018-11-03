@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Found Queen
-category: Love
+category: 随便啦
 keyword: love, the queen, my queen, my girls
 ---
 
