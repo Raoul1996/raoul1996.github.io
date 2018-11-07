@@ -49,6 +49,8 @@ then, you can use `sudo systemctl status {service name}` to check the state of y
 
 ### NET Travarsal
 
+#### SSH
+
 Seems the rpi don't have a public Internet Address, and I have a Virtual Private Srver on tencent cloud. So [NAT traversal](https://en.wikipedia.org/wiki/NAT_traversal) is a good solution:
 
 There are some production about NAT traversal, like `ngrok`、`natapp` and etc. but the spped and delay are very bad. So I decide to use a open source solution: [`frp`](https://github.com/fatedier/frp)
@@ -67,11 +69,20 @@ ssh -oPort=6000 rpi@x.x.x.x
 
 haha, it's connected!
 
+#### Http
+
+you should have a domain for this part:
+
+1. set your subdomain name resolution to your VPS, to redirect requests  to your `frps` service.
+3. set the `sundomain` value in `frpc` configration file
+4. set `local_port` value in `frpc` configration file, in order to visit `http://127.0.0.1:[local_port]`
+5. config the http server on your VPS, in order to redirect requests to your `frps` service which visit the subdomain above.
+6. visit the `http://subdomain.youdomain.com:[vhost_http_port]` to visit the `http://127.0.0.1:[local_port]` on your respberry.
 
 
-### Some Operation:
+### Frp:
 
-#### Client Side:
+#### Frpc (Client Side):
 
 ```bash
 # download the frp release pkg
@@ -115,12 +126,28 @@ server_addr should be your VPS public IP address
 [common]
 server_addr = x.x.x.x
 server_port = 7000
+log_file = /var/log/frp/frpc.log
+log_level = info
+log_max_days = 7
+privilege_token = [token]
 login_fail_exit = false
+
+[web]
+privilege_mode = true
+type = http
+local_port = 80
+subdomain = frpc
+pool_count = 10
+
 [ssh]
+privilege_mode = true
 type = tcp
 local_ip = 127.0.0.1
 local_port = 22
-remote_port = 6000
+remote_port = [port]
+use_gzip = true
+use_encryption = true
+pool_count = 2
 ```
 
 also can view the full configuration file and the docs of frp repo.
@@ -130,7 +157,7 @@ also can view the full configuration file and the docs of frp repo.
 sudo systemctl status frpc
 ```
 
-#### Server Side:
+#### Frps (Server Side):
 
 ```bash
 nohup frps -c ~/.frps.ini &
@@ -139,6 +166,42 @@ nohup frps -c ~/.frps.ini &
 ```bash
 Veiw logs
 tail -f nohup.out
+```
+
+frps configuration:
+
+```
+[common]
+bind_port = 7000
+vhost_http_port = [vhost_port]
+subdomain_host = [domain]
+dashboard_port = 7500
+dashboard_user = [username]
+dashboard_pwd = [password]
+log_file = ./frps.log
+log_level = info
+log_max_days = 3
+privilege_mode = true
+privilege_token = [token]
+max_pool_count = 50
+```
+Beacuse the request for `http://frpc.youdomain.com` will arrive your VPS's `80` port by default, If you run a `nginx` server or `apache` and etc. you should redirct these requests to `frps` serive. for example, `nginx` configuration file should like this:
+
+```nginx
+server {
+  listen 80;
+  server_name frpc.youdomain.com;
+  location / {
+    proxy_pass http://0.0.0.0:7000/;
+  }
+
+}
+```
+then reload the nginx config by these command:
+
+```bash
+sudo nginx -t
+sudo nginx -s reload
 ```
 
 Thanks for your reading.
