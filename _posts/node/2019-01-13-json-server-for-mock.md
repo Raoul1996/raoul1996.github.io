@@ -55,14 +55,13 @@ server.listen(MOCK_PORT, () => {
 });
 ```
 
-```env
+```
 # env.development
-
 MOCK_PORT=9988
 ```
 ```json
 {
-  "filepath":"src/_mock_db.json",
+  "filepath":"src/_mock/db.json",
   "consts": {
     "meta": {
       "status_code": 0
