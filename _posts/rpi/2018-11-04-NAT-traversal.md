@@ -41,7 +41,7 @@ Select item `3`, and enable the SSH (only for rpi)
 this operation should add the `sshd` service into the startup items. if you don't like use `raspi-config`, this command may also work (without test):
 
 ```bash
-sudo systemctl enable sshd 
+sudo systemctl enable sshd
 sudo systemctl restart sshd
 ```
 
@@ -124,6 +124,7 @@ server_addr should be your VPS public IP address
 ```
 # /etc/frpc/frpc.ini
 [common]
+user = "your_name"
 server_addr = x.x.x.x
 server_port = 7000
 log_file = /var/log/frp/frpc.log
@@ -148,7 +149,16 @@ remote_port = [port]
 use_gzip = true
 use_encryption = true
 pool_count = 2
+
+[range:VNC]
+privilege_mode = true
+type = tcp
+local_ip = 127.0.0.1
+local_port=5901-5903
+remote_port= 55901-55903
 ```
+
+
 
 also can view the full configuration file and the docs of frp repo.
 
@@ -184,6 +194,7 @@ log_max_days = 3
 privilege_mode = true
 privilege_token = [token]
 max_pool_count = 50
+
 ```
 Beacuse the request for `http://frpc.youdomain.com` will arrive your VPS's `80` port by default, If you run a `nginx` server or `apache` and etc. you should redirct these requests to `frps` serive. for example, `nginx` configuration file should like this:
 
