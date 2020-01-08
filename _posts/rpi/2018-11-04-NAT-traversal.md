@@ -63,7 +63,7 @@ On Client Side, We ensure the `frpc` will start Automaticly. After some experime
 
 Then use this command bellow to connect the rpi:
 
-```
+```bash
 ssh -oPort=6000 rpi@x.x.x.x
 ```
 
@@ -103,7 +103,7 @@ sudo systemctl start frpc
 sudo systemctl enable frpc
 ```
 
-```
+```ini
 # /etc/systemd/system/frpc.service
 
 Description=frpc daemon
@@ -121,8 +121,7 @@ WantedBy=multi-user.target
 
 server_addr should be your VPS public IP address
 
-```
-# /etc/frpc/frpc.ini
+```ini
 [common]
 user = "your_name"
 server_addr = x.x.x.x
@@ -132,6 +131,11 @@ log_level = info
 log_max_days = 7
 privilege_token = [token]
 login_fail_exit = false
+
+admin_addr = 0.0.0.0
+admin_port = 7400
+admin_user = admin
+admin_pwd = admin
 
 [web]
 privilege_mode = true
