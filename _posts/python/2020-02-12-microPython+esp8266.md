@@ -72,25 +72,27 @@ esptool.py --port /dev/ttyUSB0 --baud 460800 write_flash --flash_size=detect -fm
 # attach raspberry
 ssh -i ~/.ssh/id_rpi -oPort=9434 pi@192.168.1.2
 
+# 
+
 # attach microPython REPL
 screen /dev/ttyUSB0 115200
 ```
 然后进入 microPythonREPL
 
-```
+```repl
 MicroPython v1.12 on 2019-12-20; ESP module with ESP8266
 Type "help()" for more information.
 >>> 
 ```
 开启 webREPL，然后就可以上传文件到板子上了
 
-```
+```repl
 >>> import webrepl_setup
 ```
 
 按照提示说明做就行。不出意外，你已经成功打开 WebREPL，并且设置好密码了。
 
-```
+```repl
 WebREPL daemon started on ws://192.168.4.1:8266
 Started webrepl in normal mode
 ```
@@ -99,7 +101,7 @@ Started webrepl in normal mode
 
 板子自己会创建一个 WIFI，名称是 *MicroPython-xxxxxx*，密码是 *micropythonN*
 
-接下来将下面仓库 `clone` 到跳板机或者本地
+接下来将下面仓库 `clone` 到跳板机或者本地，并启动
 
 ```
 git clone git@github.com:micropython/webrepl.git
@@ -147,12 +149,12 @@ if __name__ == '__main__':
 ```
 然后按住板子 reset 按钮，再次通过 `screen` 进入 microPython REPL 查看，发现 webREPL 多了一个地址，例如下图：
 
-```
+```repl
 WebREPL daemon started on ws://192.168.4.1:8266
 WebREPL daemon started on ws://192.168.1.2:8266
 Started webrepl in normal mode
 ```
-下面的 `192.168.1.2` 就是路由器分配给 Esp8266 的 IP 地址。
+下面的 `192.168.1.2` 就是路由器分配给 Esp8266 的 ip 地址。
 
 WebREPL也可以使用 web 版本，如下：
 
